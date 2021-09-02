@@ -32,7 +32,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $order = Order::where('user_id',auth()->user()->id)->get();
+        $order = Order::where('user_id',auth()->user()->id)->where('status','Pending')->get();
         $Orderproducts = OrderProduct::with(['order' => function($q){
             $q->where('user_id',auth()->user()->id);}])->get();
         return view('home',compact('Orderproducts','order'));
