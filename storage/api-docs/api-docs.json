@@ -1,0 +1,998 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "E-commerce Documentation",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/admin/login": {
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Login",
+                "description": "Login Admin and Create token",
+                "operationId": "login",
+                "requestBody": {
+                    "description": "store admin data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "email",
+                                        "format": "email",
+                                        "example": "admin@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "password",
+                                        "format": "email",
+                                        "example": "mgm202025"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Invalid Credentials",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Invalid Credentials"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/admin/create": {
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "create admin",
+                "description": "create new admin ",
+                "operationId": "store",
+                "requestBody": {
+                    "description": "store new Admin name",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Admin"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "Admin@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password12345"
+                                    },
+                                    "role": {
+                                        "type": "integer",
+                                        "example": "Admin"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Admin created Successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid Data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Enter Valid Data"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/{admin}": {
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "update existing admin",
+                "description": "update admin",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "admin",
+                        "in": "path",
+                        "description": "admin id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "update admin ",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Admin"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "Admin@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password12345"
+                                    },
+                                    "role": {
+                                        "type": "integer",
+                                        "example": "admin"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Admin updated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid Data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "validation error": {
+                                            "type": "string",
+                                            "example": "Sorry,Enter Valid Data"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/delete/{admin}": {
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Delete Admin",
+                "description": "Delete Admin",
+                "operationId": "AdminDelete",
+                "parameters": [
+                    {
+                        "name": "admin",
+                        "in": "path",
+                        "description": "ID of Admin",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "2"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Admin Deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "format": "text",
+                                            "example": "Admin deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "The given data was invalid.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/logout": {
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Logout",
+                "description": "Logout Admin and delete token",
+                "operationId": "logout",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Logedout"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Returns when user is not authenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Logedout"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/cart/create": {
+            "post": {
+                "tags": [
+                    "Cart"
+                ],
+                "summary": "new cart",
+                "description": "view product in cart",
+                "operationId": "create",
+                "requestBody": {
+                    "description": "Create new product",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "item": {
+                                        "type": "array",
+                                        "items": {}
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Cart created Successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid Data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Invalid Data"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/cart/cart": {
+            "get": {
+                "tags": [
+                    "Cart"
+                ],
+                "summary": "Get list of products Details in cart",
+                "description": "Returns list of product Data",
+                "operationId": "index",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/": {
+            "get": {
+                "description": "Home page",
+                "responses": {
+                    "default": {
+                        "description": "Welcome page"
+                    }
+                }
+            }
+        },
+        "/api/order/create": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Details Orders",
+                "description": "Returns list of Order Details",
+                "operationId": "index",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "orders": {
+                                            "$ref": "#/components/schemas/Order"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/order/show": {
+            "get": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "show Order Details",
+                "description": "Returns list of Order Details",
+                "operationId": "index",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/product/all": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Get list of products",
+                "description": "Returns list of product Data",
+                "operationId": "index",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "products": {
+                                            "$ref": "#/components/schemas/Product"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/product/create": {
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "new product",
+                "description": "create new product",
+                "operationId": "create",
+                "requestBody": {
+                    "description": "Create new product",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "description",
+                                    "price"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "iphone 13"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "New Technology"
+                                    },
+                                    "price": {
+                                        "type": "double",
+                                        "example": "12000"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "product created Successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid Data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Invalid Data"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/product/update/{product}": {
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "update existing product",
+                "description": "update product",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "path",
+                        "description": "product id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "update product name",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "description",
+                                    "price"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "iphone 13"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "New Technology"
+                                    },
+                                    "price": {
+                                        "type": "double",
+                                        "example": "12000"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "product": {
+                                            "$ref": "#/components/schemas/Product"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "product updated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "validation error": {
+                                            "type": "string",
+                                            "example": "Sorry, invalid product name"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/product/delete/{product}": {
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Delete existing product",
+                "description": "Delete existing product ",
+                "operationId": "destroy",
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "path",
+                        "description": "product id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "string",
+                                            "example": "product Deleted Successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Login",
+                "description": "Login user and Create token",
+                "operationId": "login",
+                "requestBody": {
+                    "description": "store user data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "email",
+                                        "format": "email",
+                                        "example": "admin@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "password",
+                                        "format": "email",
+                                        "example": "123456789"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Invalid Credentials",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Invalid Credentials"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Admin": {
+                "required": [
+                    "name",
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "email": {
+                        "description": "Admin unique email address",
+                        "type": "string",
+                        "format": "email",
+                        "readOnly": "true",
+                        "example": "Admin@gmail.com"
+                    },
+                    "name": {
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "Super Admin"
+                    },
+                    "password": {
+                        "type": "string",
+                        "format": "password",
+                        "readOnly": "true",
+                        "example": "mgm202025"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Admin"
+                }
+            },
+            "Order": {
+                "required": [
+                    "user_id",
+                    "total",
+                    "status"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "user_id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "2"
+                    },
+                    "total": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "12000"
+                    },
+                    "status": {
+                        "type": "enum",
+                        "format": "password",
+                        "readOnly": "true",
+                        "example": "mgm202025"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Order"
+                }
+            },
+            "Product": {
+                "required": [
+                    "title",
+                    "description",
+                    "price",
+                    "in_stock",
+                    "price_after",
+                    "vendor_id"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "title": {
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "Iphone 12"
+                    },
+                    "description": {
+                        "description": "Product description",
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "New Technology"
+                    },
+                    "price": {
+                        "type": "double",
+                        "readOnly": "true",
+                        "example": "111.00"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Product"
+                }
+            },
+            "User": {
+                "required": [
+                    "name",
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "email": {
+                        "description": "Admin unique email address",
+                        "type": "string",
+                        "format": "email",
+                        "readOnly": "true",
+                        "example": "user@gmail.com"
+                    },
+                    "name": {
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "Customer"
+                    },
+                    "password": {
+                        "type": "string",
+                        "format": "password",
+                        "readOnly": "true",
+                        "example": "123456789"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "User"
+                }
+            }
+        },
+        "securitySchemes": {
+            "sanctum": {
+                "type": "http",
+                "description": "Laravel Sanctum token authentication",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}
