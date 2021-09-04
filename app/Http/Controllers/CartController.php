@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Traits\ApiDesignTrait;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 use Cart;
+
+use function PHPUnit\Framework\isEmpty;
+
 class CartController extends Controller
 {
     use ApiDesignTrait;
@@ -47,6 +51,7 @@ class CartController extends Controller
      *
      */
     public function setItemCart(Request $request){
+        $products = Product::where('id' ,'>' ,0)->pluck('id')->toArray();
         $customer_id = auth()->user()->id;
         $redis = Redis::connection();
         $cart = $request->all();
@@ -65,6 +70,10 @@ class CartController extends Controller
         if(array_unique($array) != $array){
             return $this->ApiResponse(422, 'Error In Product', 'Product IS Exist More Once');
         } 
+        $diffId = array_diff($array,$products);
+        if(!empty($diffId)){
+            return $this->ApiResponse(422, 'Error In Product','Product ID Does Not Exists');
+        }
         $cacheValue = $redis->set('cart_'.$customer_id,json_encode($cartItem));     
         return $this->ApiResponse(200,'Data',Null,$cacheValue);
     }
