@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Exception;
-use Illuminate\Support\Facades\Redis;
+use Spatie\Permission\Models\Permission;
 
 
 class SocialLoginController extends Controller
@@ -42,6 +42,10 @@ class SocialLoginController extends Controller
             $user->password =Hash::make('123456789');
             $user->save();
         }
+        $user->assignRole('user');
+        $userPermission = Permission::where('guard_name','user')->get();
+        $user->givePermissionTo($userPermission);
+
 
         Auth::login($user);
    

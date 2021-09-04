@@ -41,8 +41,8 @@ class OrderController extends Controller
      *     )
      */
      public function createOrder(Request $request) {
+       $customer_id = auth()->user()->id;
         $user_order = Order::where('user_id',auth()->user()->id )->first();
-        $customer_id = auth()->user()->id;
         $cart = Redis::get('cart_'.$customer_id);
         $cartItems = json_decode($cart,true);
         $productDetails = [];

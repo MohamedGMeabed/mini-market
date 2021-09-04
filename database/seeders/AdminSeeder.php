@@ -41,13 +41,8 @@ class AdminSeeder extends Seeder
         $superAdmin->assignRole($roleAdmin);
 
        
-        // DB::table('model_has_roles')->insert([
-        //     'role_id' => 1,
-        //     'model_id' => 1,
-        //     'model_type' => ' App\Models\Admin'
-        // ]);
+    
        
-        $superAdmin->givePermissionTo(Permission::all());
         
     }
     

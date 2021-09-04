@@ -4,8 +4,8 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-8">
+        <div class="card-header">{{ __('Dashboard') }}</div>
         <div class="card">
-          <div class="card-header">{{ __('Dashboard') }}</div>
           <div class="card-body">
             <div class="container">
               <div class="row">
@@ -39,34 +39,7 @@
               </div>
                     </div>
             </div>
-            <div class="card">
-                  <div class="card-body">
-               
-                    <div class="container">
-                    <div class="row">
-                      <h2>Order Details</h2>
-                      <div class="table-responsive">
-                        <table class="table table-striped table-sm">
-                          <thead>
-                            <tr>
-                                  <th>ID</th>
-                                  <th>Product</th>
-                                  <th>Price</th>
-                                  <th>Quantity</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                        @foreach ($Orderproducts as $Orderproduct)
-                        <tr>
-                          <td>{{ $Orderproduct->id }}</td>
-                          <td>{{ $Orderproduct->product->title }}</td>
-                          <td>{{ $Orderproduct->price }}</td>
-                          <td>{{ $Orderproduct->quantity }}</td>
-                        </tr>
-                        @endforeach
-                      </tbody>
-                  </table>
-            </div>
+            
                     </div>
                     </div>
                   </div>               
@@ -74,6 +47,34 @@
 
           </div>
         </div>
+        <div class="card">
+          <div class="card-body">
+       
+            <div class="container">
+            <div class="row">
+              <h2>Order Details</h2>
+              <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                  <thead>
+                    <tr>
+                          <th>ID</th>
+                          <th>Product</th>
+                          <th>Price</th>
+                          <th>Quantity</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                @foreach ($Orderproducts as $Orderproduct)
+                <tr>
+                  <td>{{ $Orderproduct->id }}</td>
+                  <td>{{ $Orderproduct->product->title }}</td>
+                  <td>{{ $Orderproduct->price }}</td>
+                  <td>{{ $Orderproduct->quantity }}</td>
+                </tr>
+                @endforeach
+              </tbody>
+          </table>
+    </div>
     </div>
 </div>
 @endsection
