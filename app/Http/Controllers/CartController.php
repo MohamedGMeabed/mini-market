@@ -50,7 +50,7 @@ class CartController extends Controller
      * )
      *
      */
-    public function setItemCart(Request $request){
+    public function setCartItem(Request $request){
         $products = Product::where('id' ,'>' ,0)->pluck('id')->toArray();
         $customer_id = auth()->user()->id;
         $redis = Redis::connection();
@@ -100,10 +100,39 @@ class CartController extends Controller
      *     )
      */
     
-    public function getItemCart(){
+    public function getCartItem(){
         $customer_id = auth()->user()->id;
         $cartValue = Redis::get('cart_'.$customer_id);
         return  $this->ApiResponse(200,'Cart Data',null,json_decode($cartValue));
-        }
+    }
+
+
+      /**
+     * @OA\post(
+     *      path="/api/cart/delete",
+     *      operationId="delete",
+     *      tags={"Cart"},
+     *      security={ {"sanctum": {} }},
+     *      summary="Delete products From cart",
+     *      description="Delete Cart",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Cart Item Deleted Successfully",
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *     )
+     */
+    public function deleteCartItem(){
+        $customer_id = auth()->user()->id;
+         Redis::del('cart_'.$customer_id);
+        return  $this->ApiResponse(200,"Cart Item Deleted Successfully");
+    }
 
 }
