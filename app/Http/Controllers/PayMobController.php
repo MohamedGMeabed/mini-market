@@ -12,7 +12,7 @@ class PayMobController extends Controller
     public function index()
     {
         $customer = auth()->user();
-        $orderData= Order::where('user_id',$customer->id)->first();
+        $orderData= Order::where('user_id',$customer->id)->where('status','pending')->first();
        $Orderproducts = OrderProduct::with(['order' => function($q){
           $q->where('user_id',auth()->user()->id );  }])->first();
 

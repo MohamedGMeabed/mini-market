@@ -32,7 +32,7 @@
                                     "password": {
                                         "type": "password",
                                         "format": "email",
-                                        "example": "mgm202025"
+                                        "example": "123456789"
                                     }
                                 },
                                 "type": "object"

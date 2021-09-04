@@ -41,24 +41,24 @@ class OrderController extends Controller
      *     )
      */
      public function createOrder(Request $request) {
-         $user_order = Order::where('user_id',auth()->user()->id )->first();
-         $customer_id = auth()->user()->id;
-         $cart = Redis::get('cart_'.$customer_id);
-         $cartItems = json_decode($cart,true);
-         $productDetails = [];
-         foreach($cartItems as $itemDetail){
-            $requestItem = explode(',', $itemDetail);
-             $productDetails[] =$requestItem;      
-          } 
+        $user_order = Order::where('user_id',auth()->user()->id )->first();
+        $customer_id = auth()->user()->id;
+        $cart = Redis::get('cart_'.$customer_id);
+        $cartItems = json_decode($cart,true);
+        $productDetails = [];
+        foreach($cartItems as $itemDetail){
+          $requestItem = explode(',', $itemDetail);
+            $productDetails[] =$requestItem;      
+        } 
         $total= 0; 
         for ($i = 0; $i<count($productDetails); $i++){
-           $total = $total + ($productDetails[$i][1] * $productDetails[$i][2] );
-          }
-        if(!$user_order) {
-            $order = Order::create([
-                 'user_id' =>auth()->user()->id,
-                 'total' => $total,
-                 'status' =>'pending',
+          $total = $total + ($productDetails[$i][1] * $productDetails[$i][2] );
+        }
+        if(!$user_order || $user_order->status == 'success') {
+          $order = Order::create([
+                'user_id' =>auth()->user()->id,
+                'total' => $total,
+                'status' =>'pending',
           ]);
           for ($i = 0; $i<count($productDetails); $i++){
                $productOrder = OrderProduct::create([
@@ -69,7 +69,7 @@ class OrderController extends Controller
                ]);
              }
          return $this->ApiResponse(200,"Your Order",null,$order );
-        } elseif($user_order->status == 'pending') {
+        } elseif($user_order->status == 'pending' ) {
           $user_order->delete();
           $order = Order::create([
                'user_id' =>auth()->user()->id,
@@ -86,7 +86,8 @@ class OrderController extends Controller
         }
         return $this->ApiResponse(200,"Your Order",null,$order);
         }
-        return $this->ApiResponse(200,"Your Have an Order Not Paid Yet",null,$user_order);
+       return $this->ApiResponse(200,"Your Order",null,$user_order);
+      //  return $this->ApiResponse(200,"Your Have an Order Not Paid Yet",null,$user_order);
      }
 
        /**

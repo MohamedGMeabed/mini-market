@@ -24,7 +24,7 @@ class CartController extends Controller
      *    description="Create new product",
      *    @OA\JsonContent(
      *           @OA\Property(property="item", type="array",
-     *          @OA\Items(
+     *          @OA\Items(    
      *              ),
      *           ),
      *           ),
@@ -50,8 +50,22 @@ class CartController extends Controller
         $customer_id = auth()->user()->id;
         $redis = Redis::connection();
         $cart = $request->all();
-        $cartData = $cart['item'];
-        $cacheValue = $redis->set('cart_'.$customer_id,json_encode($cartData));     
+        $cartData =json_encode($cart['item']);  
+        $cartItem = json_decode($cartData,true);
+        $productDetails = []; 
+        $array = [];
+        foreach($cartItem as $itemDetail){
+            $requestItem = explode(',', $itemDetail);
+            $array[] =$requestItem[0];
+            $productDetails[] =$requestItem;
+            if(count($requestItem) != 3){
+                return $this->ApiResponse(422, 'Error In Product', 'Enter All Product Data');
+            }  
+        } 
+        if(array_unique($array) != $array){
+            return $this->ApiResponse(422, 'Error In Product', 'Product IS Exist More Once');
+        } 
+        $cacheValue = $redis->set('cart_'.$customer_id,json_encode($cartItem));     
         return $this->ApiResponse(200,'Data',Null,$cacheValue);
     }
      /**
