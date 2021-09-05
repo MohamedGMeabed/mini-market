@@ -6,6 +6,7 @@ use App\Http\Resources\OrderResource;
 use App\Http\Traits\ApiDesignTrait;
 use App\Models\Order;
 use App\Models\OrderProduct;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 
@@ -41,6 +42,7 @@ class OrderController extends Controller
      *     )
      */
      public function createOrder(Request $request) {
+      $this->authorize('create', Order::class);
        $customer_id = auth()->user()->id;
         $user_order = Order::where('user_id',auth()->user()->id )->first();
         $cart = Redis::get('cart_'.$customer_id);
@@ -114,6 +116,7 @@ class OrderController extends Controller
      */
 
      public function showOrder(){
+       $this->authorize('view', Order::class);
          $user_order = Order::with(['orderProduct'])->where('user_id',auth()->user()->id )->get();
           return $this->ApiResponse(200,'your Order Details',null,OrderResource::collection($user_order));
      }

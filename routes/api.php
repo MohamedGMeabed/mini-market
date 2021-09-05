@@ -44,9 +44,9 @@ Route::group(['prefix'=>'product','middleware'=>'auth:sanctum'],function(){
 
 });
 Route::group(['prefix'=>'cart','middleware'=>'auth:sanctum'],function(){
-    Route::post('create',[CartController::class,'setCartItem']);
-    Route::get('cart',[CartController::class,'getCartItem']);
-    Route::post('delete',[CartController::class,'deleteCartItem']);
+    Route::post('create',[CartController::class,'setCartItem'])->middleware('can:create_cart');
+    Route::get('cart',[CartController::class,'getCartItem'])->middleware('can:view_cart');
+    Route::post('delete',[CartController::class,'deleteCartItem'])->middleware('can:delete_cart');
 });
 
 Route::group(['prefix'=>'order','middleware'=>'auth:sanctum'],function(){

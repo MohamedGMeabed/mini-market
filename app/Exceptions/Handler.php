@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use App\Http\Traits\ApiDesignTrait;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Spatie\Permission\Exceptions\PermissionDoesNotExist;
 use Throwable;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -40,13 +41,19 @@ class Handler extends ExceptionHandler
     {
         $this->renderable(function (AccessDeniedHttpException $e, $request) {
             if ($request->is('api/*')) {
-                return $this->ApiResponse(403,'Your Have No Permission To Do It');
+                return $this->ApiResponse(403,'You Have No Permission To Do It');
             }
          });
 
         $this->renderable(function (NotFoundHttpException $e, $request) {
             if ($request->is("api/*")) {
                 return $this->ApiResponse(404,'Record not found');
+            }
+            return $this->ApiResponse(404,'Error',$e->getMessage());
+        });
+        $this->renderable(function (PermissionDoesNotExist $e, $request) {
+            if ($request->is("api/*")) {
+                return $this->ApiResponse(404,'You Have No Permission To Do It');
             }
             return $this->ApiResponse(404,'Error',$e->getMessage());
         });
