@@ -4,6 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+
 class UpdateAdmin extends FormRequest
 {
     /**
@@ -27,7 +29,7 @@ class UpdateAdmin extends FormRequest
         return [
             'name' => 'required|max:255|string',
             'email' => 'required|email', 
-           //'email' => 'required|email|unique:admins,email,admin_id', 
+       //  'email' => 'required|email|unique:admins,email,'.auth()->user()->id, 
             'password' =>'required|string|min:6',
            // 'admin_id'=>"required|exists:admins,id",
         ];

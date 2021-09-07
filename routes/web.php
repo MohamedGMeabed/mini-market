@@ -32,3 +32,6 @@ Route::get('/callback/{driver}',[SocialLoginController::class,'handleSocialCallb
 Route::get('pay',[PayMobController::class,'index'])->name('payment');
 Route::get('order-status/{order_id}/{status}',[HomeController::class, 'editOrderStatus'])->name('edit.status');
 
+
+Route::post('/save-push-notification-token', [HomeController::class, 'savePushNotificationToken'])->name('save-push-notification-token');
+Route::get('/send-push-notification/{order_id}/{status}', [HomeController::class, 'sendPushNotification'])->name('send.push-notification');

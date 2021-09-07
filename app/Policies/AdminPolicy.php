@@ -15,7 +15,7 @@ class AdminPolicy
     }
     public function edit(Admin $user,Admin $admin)
     { 
-        return $user->id === $admin->id || $user->hasPermissionTo('edit_admin');
+        return $user->id == $admin->id || $user->hasPermissionTo('edit_admin');
     }
     public function delete(Admin $user, Admin $admin)
     {

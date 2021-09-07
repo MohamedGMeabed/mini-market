@@ -153,7 +153,7 @@ class AdminController extends Controller
      *
      */
     public function update(Admin $admin, UpdateAdmin $request)
-    {
+    { 
        $this->authorize('edit',$admin);
         $admin ->update([
             'name'=>$request->name,

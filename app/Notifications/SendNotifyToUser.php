@@ -46,7 +46,7 @@ class SendNotifyToUser extends Notification implements ShouldBroadcast
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                        ->line("Hello: ". auth()->user()->name ." You Are Created A New Order")
+                        ->line("Hello: ". auth()->user()->name ." You Make An Order Successfully")
                         ->line("Order Content Is ".$this->order->total)
                         ->action('Aprroving order', url('/home'))
                         ->line('Thank you!');

@@ -32,6 +32,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'fcm_token'
     ];
     protected $guard_name = 'user';
 

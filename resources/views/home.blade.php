@@ -7,8 +7,6 @@
         <div class="card-header">{{ __('Dashboard') }}</div>
         <div class="card">
           <div class="card-body">
-            <div class="container">
-              <div class="row">
                 <h2>Order</h2>
                 <div class="table-responsive">
                     <table class="table table-striped table-sm">
@@ -31,20 +29,15 @@
                       </tbody>
                     </table>
                 </div>
-              <div class="col-md-6 offset-md-3">
+              <div class="col-md-4 offset-md-3">
                 <a href="{{route('payment')}}" class="btn btn-primary btn-block ">Pay with PayMob</a>
-                <a  href="{{url('order-status') }}/{{ $objOrder->id }}/success" class="btn btn-info btn-block">Cach On Delivery</a>
-                @endforeach
+                <a  href="{{url('send-push-notification') }}/{{ $objOrder->id }}/success" class="btn btn-info btn-block">Cach On Delivery</a>
                 </div>
                </div>
               </div>
-            </div>
-          </div>
-        </div>
+              @endforeach
         <div class="card">
           <div class="card-body">
-            <div class="container">
-            <div class="row">
               <h2>Order Details</h2>
               <div class="table-responsive">
                 <table class="table table-striped table-sm">
@@ -57,19 +50,25 @@
                     </tr>
                   </thead>
                   <tbody>
-                @foreach ($Orderproducts as $Orderproduct)
-                <tr>
+                   @foreach ($Orderproducts as $Orderproduct)
+                  <tr>
                   <td>{{ $Orderproduct->id }}</td>
                   <td>{{ $Orderproduct->product->title }}</td>
                   <td>{{ $Orderproduct->price }}</td>
                   <td>{{ $Orderproduct->quantity }}</td>
-                </tr>
-                @endforeach
-              </tbody>
-          </table>
-    </div>
-      </div>
+                  </tr>
+                   @endforeach
+                  </tbody>
+                </table>
+              </div>
+            </div>
+        </div>
+  
+        </div>
+
     </div>
 </div>
+
+
 @endsection
 
