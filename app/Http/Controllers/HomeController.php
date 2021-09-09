@@ -51,7 +51,7 @@ class HomeController extends Controller
             "registration_ids" => $firebaseToken,
             "notification" => [
                 "title" => "success",
-                "body" => "Your Order Make Succesfully",  
+                "body" => auth()->user()->name . " Make Order Succesfully",  
             ]
         ];
         $dataString = json_encode($data);
@@ -73,13 +73,14 @@ class HomeController extends Controller
                
         $response = curl_exec($ch);
   
-       // dd($response);
+       //dd($response);
         return redirect()->route('home');
     } 
 
     public function savePushNotificationToken(Request $request)
     {
         auth()->user()->update(['fcm_token'=>$request->token]);
+        
         return response()->json(['token saved successfully.']);
     }
 }
